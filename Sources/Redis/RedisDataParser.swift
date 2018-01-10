@@ -198,8 +198,8 @@ internal final class RedisDataParser: Async.Stream, ConnectionContext {
                 throw RedisError(.parsingError)
             }
             
-            guard size >= 0 else {
-                throw RedisError(.parsingError)
+            if size < 0 {
+                return .parsed(.null)
             }
             
             var array = [PartialRedisData](repeating: .notYetParsed, count: size)
